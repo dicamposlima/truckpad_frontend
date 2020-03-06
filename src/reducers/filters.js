@@ -1,7 +1,7 @@
 // Filters Reducer
 
 const filtersReducerDefaultState = {
-  status: 1,
+    inactives: false,
 };
 
 export default (state = filtersReducerDefaultState, action) => {
@@ -9,7 +9,7 @@ export default (state = filtersReducerDefaultState, action) => {
     case 'SORT_BY_STATUS':
       return {
         ...state,
-        status: action.status
+        inactives: action.inactives
       };
     default:
       return state;

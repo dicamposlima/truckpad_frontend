@@ -1,6 +1,6 @@
 // SORT_BY_STATUS
-export const sortByStatus = (status = 1) => ({
+export const sortByStatus = (inactives = false) => ({
   type: 'SORT_BY_STATUS',
-  status
+  inactives
 });
 

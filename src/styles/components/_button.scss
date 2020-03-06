@@ -22,3 +22,9 @@
 .edit-outlined-icon {
     padding-right: $s-size;
 }
+
+.button--page-switch {
+    display: flex;
+    justify-content: flex-end;
+    padding: 0 $s-size;
+}

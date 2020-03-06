@@ -4,13 +4,11 @@ import { Link } from 'react-router-dom';
 import DriverListTable from './DriverListTable';
 import DriverListDescriptions from './DriverListDescriptions';
 import selectDrivers from '../selectors/drivers';
-import { Button } from 'antd';
-import { UserAddOutlined } from '@ant-design/icons';
+import { sortByStatus } from '../actions/filters';
+import { Button, Switch, Typography } from 'antd';
+import { UserAddOutlined, CloseOutlined, CheckOutlined } from '@ant-design/icons';
 
-const handleSizeChange = e => {
-    this.setState({ size: e.target.value });
-  };
-
+const { Text } = Typography;
 
 const header = (<div className="page-header-alignment">
   <div className="header-page-title">Motoristas</div>
@@ -22,51 +20,72 @@ const header = (<div className="page-header-alignment">
     </Link>
 </div>);
 
-export const DriverList = (props) => (
-    <>
-        <div className="list-header">
-            <div className="show-for-mobile">
-                {header}
-            </div>
-            <div className="show-for-desktop">
-                {header}
-            </div>
-        </div>
-        <div className="">
-            <div className="list-body">
-                {
-                    props.drivers.length === 0 ? (
-                    <div className="list-item list-item--message">
-                        <span>Nenhum dado encontrado.</span>
-                    </div>
-                    ) : (
-                        <>
-                            <div className="show-for-mobile">
-                                <div className="content-container">
-                                    <DriverListDescriptions {...props} />
-                                </div>
-                            </div>
-                            <div className="show-for-desktop">
-                                <DriverListTable {...props} />
-                            </div>
-                        </>
-                    )
-                }
-            </div>
-        </div>
-    </>
-);
 
-const mapStateToPropsS = (state) => {
+
+const DriverList = (props) => {
+
+    const onInactivesShow = checked => {
+        props.sortByStatus(checked);
+    };
+    return (
+            <>
+                <div className="list-header">
+                    <div className="show-for-mobile">
+                        {header}
+                    </div>
+                    <div className="show-for-desktop">
+                        {header}
+                    </div>
+                </div>
+
+                <div className="">
+                        <div className="button--page-switch">
+                            <Text style={{ paddingRight: 10 }}>Exibir inativos</Text>
+                            {props.inactives ? (
+                                    <Switch
+                                        checked
+                                        checkedChildren={<CheckOutlined />}
+                                        unCheckedChildren={<CloseOutlined />}
+                                        onChange={onInactivesShow}/>
+
+                                        ) : (
+                                            <Switch
+                                            checkedChildren={<CheckOutlined />}
+                                            unCheckedChildren={<CloseOutlined />}
+                                            onChange={onInactivesShow}/>
+                                        )}
+                        </div>
+
+                    <div className="list-body">
+                        {
+                            props.drivers.length === 0 ? (
+                            <div className="list-item list-item--message">
+                                <span>Nenhum dado encontrado.</span>
+                            </div>
+                            ) : (
+                                <>
+                                    <div className="content-container">
+                                        <DriverListDescriptions {...props} />
+                                    </div>
+                                </>
+                            )
+                        }
+                    </div>
+                </div>
+            </>
+    )
+}
+
+const mapStateToProps = (state) => {
+  const {drivers, filters}  = state
   return {
-    drivers: selectDrivers(state.drivers, state.filters)
+    drivers: selectDrivers(drivers[0], filters.inactives),
+    inactives: state.inactives
   };
 };
 
-const mapStateToProps = (state) => {
-    return {
-      drivers: state.drivers
-    };
-  };
+const mapDispatchToProps = (dispatch) => ({
+    sortByStatus: (inactives) => dispatch(sortByStatus(inactives))
+});
 
-export default connect(mapStateToProps)(DriverList);
+export default connect(mapStateToProps, mapDispatchToProps)(DriverList);

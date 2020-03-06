@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import AppRouter from './routers/AppRouter';
 import configureStore from './store/configureStore';
 import { initListDrivers } from './actions/drivers';
+import { sortByStatus } from './actions/filters';
 import 'normalize.css/normalize.css';
 import './styles/styles.scss';
 import 'antd/dist/antd.css';
@@ -26,6 +27,8 @@ const renderApp = () => {
   }
 };
 
-store.dispatch(initListDrivers());
-renderApp();
+store.dispatch(initListDrivers()).then( _ => {
+    renderApp();
+});
+
 
