@@ -2,7 +2,12 @@
 
 ## Instale a última versão do [NodeJs](https://nodejs.org/en/download) e siga os passos abaixo
 
-### `Pelo terminal acesse a página no projeto e execute o comando abaixo:`
+#### Clone ou faça o download do back-end da aplicação pelo [link](https://github.com/dicamposlima/truckpad_backend) e siga os passos para o setup.
+
+Após a configuração do back-end siga os passos abaixo:
+
+### Pelo terminal acesse a página no projeto e execute os comandos abaixo:
+
 
 1. Installe as dependências:
 ```bash
