@@ -1,0 +1,4 @@
+test:
+    stage: test
+    script:
+    - bundle exec npm install
